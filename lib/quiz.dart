@@ -13,16 +13,36 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  Widget activeScreen = const StartScreen();
+  var activeScreen = 'start-screen';
+
+//  Widget ? activeScreen; //activeScreen could also be null (no value initially)
+
+//Execute before render - after the object was created but not during the object creation
+  // @override
+  // void initState() {
+  //   activeScreen = StartScreen(switchScreen);
+  //   super.initState();  // make sure that in parent class (State class) initState is executing
+  // }
 
   void switchScreen() {
     setState(() {
-      activeScreen = const QuestionsScreen();
+      activeScreen =
+          'questions-screen'; // this approach does not require initState()
     });
   }
 
   @override
   Widget build(context) {
+    // final screenWidget = activeScreen == 'start-screen' // condition outside the Widget
+    //            ? StartScreen(switchScreen) //if condition is true
+    //            : const QuestionsScreen(); // if condition is false
+
+    Widget screenWidget = StartScreen(switchScreen); 
+
+    if (activeScreen == 'questions-screen') {
+      screenWidget = const QuestionsScreen();
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -36,7 +56,11 @@ class _QuizState extends State<Quiz> {
               end: Alignment.bottomRight,
             ),
           ),
-          child: activeScreen,
+          //child: activeScreen,
+          // child: activeScreen == 'start-screen' // condition - to render content conditionally
+          //     ? StartScreen(switchScreen) //if condition is true
+          //     : const QuestionsScreen(), // if condition is false
+          child: screenWidget,
         ),
       ),
     );

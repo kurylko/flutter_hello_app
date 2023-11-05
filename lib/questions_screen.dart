@@ -1,17 +1,40 @@
+import 'package:first_flutter_app/answer_button.dart';
 import 'package:flutter/material.dart';
+import 'package:first_flutter_app/data/questions.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({super.key});
 
   @override
-  State<QuestionsScreen> createState(){
+  State<QuestionsScreen> createState() {
     return _QuestionsScreenState();
   }
 }
 
-class _QuestionsScreenState extends State<QuestionsScreen>{
+class _QuestionsScreenState extends State<QuestionsScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Text('questions screen');
+    //accessing to quiz questions from data folder
+    final currentQuestion = questions[0];
+
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            currentQuestion.text,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 30),
+          // dynamicly populating the answer buttons with data - ... - spreading
+          ...currentQuestion.answers.map((answer) {
+            return AnswerButton(answerText: answer, onTap: () {}); 
+          }),
+        ],
+      ),
+    );
   }
 }
