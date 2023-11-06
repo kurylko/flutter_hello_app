@@ -19,4 +19,12 @@ const questions = [
     'What Ket likes?',
     ['sleep', 'hiking', 'humans', 'kek'],
   ),
+  QuizQuestion(
+    'What Ket doesnt like?',
+    ['postmans', 'mouses', 'warm', 'kek'],
+  ),
+   QuizQuestion(
+    'What Ket dreams for',
+    ['birds', 'mouses', 'sommer', 'mountains'],
+  ),
 ];

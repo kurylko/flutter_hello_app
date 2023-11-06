@@ -2,6 +2,7 @@ import 'package:first_flutter_app/data/questions.dart';
 import 'package:first_flutter_app/questions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:first_flutter_app/start_screen.dart';
+import 'package:first_flutter_app/results_screen.dart';
 //import 'package:first_flutter_app/gradient_container.dart';
 
 class Quiz extends StatefulWidget {
@@ -13,8 +14,8 @@ class Quiz extends StatefulWidget {
   }
 }
 
-class _QuizState extends State<Quiz> {
-  List<String> selectedAnswers = []; // storing selected answers
+class _QuizState extends State<Quiz> { // _ is private for that class and used only inside that file
+  List<String> _selectedAnswers = []; // storing selected answers
   var activeScreen = 'start-screen';
 
 //  Widget ? activeScreen; //activeScreen could also be null (no value initially)
@@ -34,14 +35,20 @@ class _QuizState extends State<Quiz> {
   }
 
   void chooseAnswer(String answer) {
-    selectedAnswers.add(answer);
+    _selectedAnswers.add(answer);
 
-    if (selectedAnswers.length == questions.length){
+    if (_selectedAnswers.length == questions.length) {
       setState(() {
-        selectedAnswers = [];
-        activeScreen = 'start-screen';
+        activeScreen = 'results-screen'; //when there are no more questions
       });
     }
+  }
+
+  void restartQuiz(){
+    setState(() {
+      _selectedAnswers = [];       // resetting answers to empty list 
+      activeScreen = 'questions-screen';
+    });
   }
 
   @override
@@ -55,6 +62,13 @@ class _QuizState extends State<Quiz> {
     if (activeScreen == 'questions-screen') {
       screenWidget = QuestionsScreen(
         onSelectAnswer: chooseAnswer,
+      );
+    }
+
+    if (activeScreen == 'results-screen') {
+      screenWidget = ResultsScreen(
+        chosenAnswers: _selectedAnswers,
+        onRestart: restartQuiz,
       );
     }
 

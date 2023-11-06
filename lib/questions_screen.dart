@@ -51,7 +51,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
             ),
             const SizedBox(height: 30),
             // dynamicly populating the answer buttons with data - ... - spreading
-            ...currentQuestion.getShuffledAnswers().map((answer) {
+            ...currentQuestion.shuffledAnswers.map((answer) {
               //from quizQuiestions model
               return AnswerButton(
                   answerText: answer,
